@@ -2,7 +2,12 @@
 import * as info from "../info.js";
 import { createStatWidget } from "../window/createStatWidget";
 import { areStatisticsPaused } from "./../window/windowPause";
-import { WritableStore, store } from "openrct2-flexui";
+import {
+  FlexiblePosition,
+  WidgetCreator,
+  WritableStore,
+  store,
+} from "openrct2-flexui";
 
 export class Statistic<T, U> {
   /** The save/load key */
@@ -43,6 +48,12 @@ export class Statistic<T, U> {
       parkStatStore: this.parkStatStore,
       formatDisplay: this.formatDisplay,
     });
+  }
+
+  extendedDisplay?: WidgetCreator<FlexiblePosition>;
+
+  get extendedDisplayWidget() {
+    return this.extendedDisplay ? this.extendedDisplay : this.widget;
   }
 
   constructor(

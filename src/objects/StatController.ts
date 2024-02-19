@@ -4,7 +4,7 @@ import { Statistic } from "./Statistic";
  * Represents a controller for managing statistics.
  */
 export class StatController {
-  private statistics: Statistic<any, any>[] = [];
+  statistics: Statistic<any, any>[] = [];
 
   /**
    * Gets an array of widgets associated with the statistics.
