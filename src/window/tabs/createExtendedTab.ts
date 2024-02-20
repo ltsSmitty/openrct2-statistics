@@ -8,7 +8,6 @@ export const createExtendedTab = (
 ) => {
   return box({
     content,
-    disabled: compute(selectedIndex, (selected) => selected !== index),
     visibility: compute(selectedIndex, (selected) =>
       getElementVisibility(selected === index)
     ),

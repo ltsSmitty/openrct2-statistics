@@ -2,7 +2,6 @@ import {
   WritableStore,
   WidgetCreator,
   FlexiblePosition,
-  horizontal,
   vertical,
   label,
   compute,
@@ -19,21 +18,16 @@ export const getVehiclesCrashedExtendedDisplay = (
         text: "Crashes today",
       }),
       label({
-        text: compute(
-          vehiclesCrashedGameStore,
-          vehiclesCrashedParkStore,
-          (crashesG, crashesP) => {
-            const crashes = crashesG.concat(crashesP);
-            const today = new Date();
-            const crashesToday = crashes.filter((crash) => {
-              return (
-                new Date(crash.dateTime as unknown as string).getDate() ===
-                today.getDate()
-              );
-            });
-            return crashesToday.length.toString();
-          }
-        ),
+        text: compute(vehiclesCrashedGameStore, (crashes) => {
+          const today = new Date();
+          const crashesToday = crashes.filter((crash) => {
+            return (
+              new Date(crash.dateTime as unknown as string).getDate() ===
+              today.getDate()
+            );
+          });
+          return crashesToday.length.toString();
+        }),
       }),
     ],
   });
