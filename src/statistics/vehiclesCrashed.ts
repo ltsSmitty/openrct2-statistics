@@ -1,12 +1,5 @@
-import {
-  FlexiblePosition,
-  WidgetCreator,
-  WritableStore,
-  store,
-} from "openrct2-flexui";
 import { Statistic } from "../objects/Statistic";
-import { getVehiclesCrashedExtendedDisplay } from "../window/extendedDisplays/vehiclesCrashedExtended";
-
+import { vehiclesCrashedExtendedDisplayTab } from "../window/extendedDisplays/vehiclesCrashedExtended";
 const STATISTIC_KEY = "vehiclesCrashed";
 const STATISTIC_TITLE = "Vehicle Crashes";
 
@@ -49,7 +42,7 @@ export const vehiclesCrashedStatistic = () => {
     formatDisplay
   );
 
-  statistic.extendedDisplay = getVehiclesCrashedExtendedDisplay(
+  statistic.extendedDisplayWidget = vehiclesCrashedExtendedDisplayTab(
     statistic.gameStatStore,
     statistic.parkStatStore
   );

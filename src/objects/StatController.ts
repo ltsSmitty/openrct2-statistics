@@ -1,3 +1,4 @@
+import { TabCreator } from "openrct2-flexui";
 import { Statistic } from "./Statistic";
 
 /**
@@ -11,6 +12,15 @@ export class StatController {
    */
   get widgets() {
     return this.statistics.map((stat) => stat.widget);
+  }
+
+  get extendedDisplayTabs() {
+    return (
+      this.statistics
+        .map((stat) => stat.extendedDisplayWidget)
+        // need to cast because TS isn't smart enough to know that the filter removes undefined
+        .filter((widget) => widget !== undefined) as TabCreator[]
+    );
   }
 
   /**

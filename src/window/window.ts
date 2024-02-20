@@ -1,7 +1,6 @@
 import * as flex from "openrct2-flexui";
 import { StatController } from "../objects/StatController";
 import { mainTabContent } from "./tabs/mainTab";
-import { extendedDisplayTabContent } from "./tabs/extendedDIsplayTab";
 
 let window: flex.WindowTemplate;
 let isWindowOpen = false;
@@ -15,7 +14,7 @@ export function initialize(sc: StatController) {
     colours: [flex.Colour.LightBlue, flex.Colour.LightBlue, flex.Colour.White],
     onOpen: () => (isWindowOpen = true),
     onClose: () => (isWindowOpen = false),
-    tabs: [mainTabContent(sc), extendedDisplayTabContent(sc)],
+    tabs: [mainTabContent(sc), ...sc.extendedDisplayTabs],
   });
 }
 

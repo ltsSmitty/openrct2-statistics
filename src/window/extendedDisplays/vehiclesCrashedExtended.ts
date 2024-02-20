@@ -1,35 +1,62 @@
 import {
   WritableStore,
-  WidgetCreator,
-  FlexiblePosition,
   vertical,
   label,
   compute,
+  groupbox,
+  tab,
+  TabCreator,
+  listview,
 } from "openrct2-flexui";
 import { VehicleCrashStat } from "../../statistics/vehiclesCrashed";
 
-export const getVehiclesCrashedExtendedDisplay = (
+export const vehiclesCrashedExtendedDisplayTab = (
   vehiclesCrashedGameStore: WritableStore<VehicleCrashStat[]>,
-  vehiclesCrashedParkStore: WritableStore<VehicleCrashStat[]>
-): WidgetCreator<FlexiblePosition> => {
-  const widget = vertical({
+  _vehiclesCrashedParkStore: WritableStore<VehicleCrashStat[]>
+): TabCreator => {
+  return tab({
+    image: 5164,
     content: [
-      label({
-        text: "Crashes today",
-      }),
-      label({
-        text: compute(vehiclesCrashedGameStore, (crashes) => {
-          const today = new Date();
-          const crashesToday = crashes.filter((crash) => {
-            return (
-              new Date(crash.dateTime as unknown as string).getDate() ===
-              today.getDate()
-            );
-          });
-          return crashesToday.length.toString();
-        }),
+      groupbox({
+        text: "Vehicle Crash Statistics",
+        content: [
+          vertical({
+            content: [
+              crashesTodayDescription(vehiclesCrashedGameStore),
+              crashesListview(vehiclesCrashedGameStore),
+            ],
+          }),
+        ],
       }),
     ],
   });
-  return widget;
+};
+
+const crashesTodayDescription = (
+  vehiclesCrashed: WritableStore<VehicleCrashStat[]>
+) => {
+  return label({
+    text: compute(vehiclesCrashed, (crashes) => {
+      const today = new Date();
+      const crashesToday = crashes.filter((crash) => {
+        return (
+          new Date(crash.dateTime as unknown as string).getDate() ===
+          today.getDate()
+        );
+      });
+      return `Crashes today: ${crashesToday.length.toString()}`;
+    }),
+  });
+};
+
+const crashesListview = (
+  vehiclesCrashed: WritableStore<VehicleCrashStat[]>
+) => {
+  const l = listview({
+    items: compute(vehiclesCrashed, (crashes) =>
+      crashes.map((crash) => JSON.stringify(crash))
+    ),
+    columns: [{ header: "Vehicle" }],
+  });
+  return l;
 };
