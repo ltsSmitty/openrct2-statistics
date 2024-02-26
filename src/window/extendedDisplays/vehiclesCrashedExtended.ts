@@ -22,8 +22,10 @@ export const vehiclesCrashedExtendedDisplayTab = (
         content: [
           vertical({
             content: [
-              crashesTodayDescription(vehiclesCrashedGameStore),
-              crashesListview(vehiclesCrashedGameStore),
+              crashesInDayDescription(vehiclesCrashedGameStore, 0),
+              crashesInDayDescription(vehiclesCrashedGameStore, 1),
+              crashesInDayDescription(vehiclesCrashedGameStore, 2),
+              // crashesListview(vehiclesCrashedGameStore),
             ],
           }),
         ],
@@ -32,19 +34,23 @@ export const vehiclesCrashedExtendedDisplayTab = (
   });
 };
 
-const crashesTodayDescription = (
-  vehiclesCrashed: WritableStore<VehicleCrashStat[]>
+const crashesInDayDescription = (
+  vehiclesCrashed: WritableStore<VehicleCrashStat[]>,
+  daysBeforeToday: number
 ) => {
   return label({
     text: compute(vehiclesCrashed, (crashes) => {
-      const today = new Date();
+      const properDate = new Date();
+      properDate.setDate(properDate.getDate() - daysBeforeToday);
       const crashesToday = crashes.filter((crash) => {
         return (
           new Date(crash.dateTime as unknown as string).getDate() ===
-          today.getDate()
+          properDate.getDate()
         );
       });
-      return `Crashes today: ${crashesToday.length.toString()}`;
+      return `Crashes ${
+        daysBeforeToday === 0 ? `today` : `${daysBeforeToday} days ago`
+      }: ${crashesToday.length.toString()}`;
     }),
   });
 };
