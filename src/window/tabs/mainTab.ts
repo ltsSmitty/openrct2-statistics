@@ -4,8 +4,8 @@ import { getPausedWidget } from "../windowPause";
 import { getResetWidget } from "../windowReset";
 
 const statIncreaseIcon: ImageAnimation = {
-  frameBase: 5391,
-  frameCount: 16,
+  frameBase: 5367,
+  frameCount: 8,
   frameDuration: 8,
 };
 
